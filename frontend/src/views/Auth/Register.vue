@@ -1,120 +1,210 @@
 <template>
-  <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-      <b-form-group
-        id="input-group-1"
-        label="Correo:"
-        label-for="input-1"
-      >
-        <b-form-input
-          id="input-1"
-          v-model="form.email"
-          type="email"
-          style="width:70%"
-          required
-          placeholder="Ingresa tu correo"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Nombre:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          required
-          placeholder="Ingresa tu nombre"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-4" label="Apellido Paterno:" label-for="input-4">
-        <b-form-input
-          id="input-4"
-          v-model="form.apellidop"
-          required
-          placeholder="Ingresa tu apellido paterno"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-5" label="Apellido Materno:" label-for="input-5">
-        <b-form-input
-          id="input-5"
-          v-model="form.apellidom"
-          required
-          placeholder="Ingresa tu apellido materno"
-        ></b-form-input>
-      </b-form-group>
+  <div class="container mt-5 mb-5" style="width: 400px" >
+  <div class="card">
+    <h3 class="card-header text-center"> Formulario de Registro </h3>
+    <div class="card-body">
+    <b-form @submit.prevent="submit" @submit="onSubmit" @reset="onReset" v-if="show">
+      <div class="form-row">
       
-      <b-form-group id="input-group-6" label="Fecha de nacimiento:" label-for="input-6">
+      <div class="form-group col-md-12" >
+        <label>Correo</label>
+        <input type="email" class="form-control"
+        v-model.trim="$v.email.$model" :class="{
+          'is-invalid':$v.email.$error, 'is-valid':!$v.email.$invalid}">
+          <div class="valid-feedback">El correo es valido</div>
+          <div class="invalid-feedback">
+            <span v-if="!$v.email.required">El correo es requerido</span>
+            <span v-if="!$v.email.isUnique">Ingrese un correo valido</span>
+          </div>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label>Nombre</label>
+        <input type="text" class="form-control"
+        v-model.trim="$v.name.$model" :class="{
+          'is-invalid':$v.name.$error, 'is-valid':!$v.name.$invalid}">
+          <div class="valid-feedback">El nombre es valido</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.name.required">El nombre es requerido</span>
+            <span v-if="!$v.name.isUnique">Ingrese nombre valido</span>
+          </div>
+      </div>
+      
+      <div class="form-group col-md-6">
+        <label>Apellido Paterno</label>
+        <input type="text" class="form-control"
+        v-model.trim="$v.apellidop.$model" :class="{
+          'is-invalid':$v.apellidop.$error, 'is-valid':!$v.apellidop.$invalid}">
+          <div class="valid-feedback">El apellido paterno es valido</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.apellidop.required">El apellido paterno es requerido</span>
+            <span v-if="!$v.apellidop.isUnique">Ingrese apellido paterno valido</span>
+          </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>Apellido Materno</label>
+        <input type="text" class="form-control"
+        v-model.trim="$v.apellidom.$model" :class="{
+          'is-invalid':$v.apellidom.$error, 'is-valid':!$v.apellidom.$invalid}">
+          <div class="valid-feedback">El apellido materno es valido</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.apellidom.required">El apellido materno es requerido</span>
+            <span v-if="!$v.apellidom.isUnique">Ingrese apellido materno valido</span>
+          </div>
+      </div>
+
+      
+      <b-form-group id="input-group-6" label-cols-md="12" label="Fecha de nacimiento:" label-for="input-6">
         <b-form-datepicker 
-          id="input-6" 
-          v-model="form.fecha" 
-          required 
-          class="mb-2">
+          v-model.trim="$v.fecha.$model" :class="{
+          'is-invalid':$v.fecha.$error, 'is-valid':!$v.fecha.$invalid}">
+          <div class="valid-feedback">Fecha valida</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.fecha.required">La fecha es requerida</span>
+          </div>
         </b-form-datepicker>
       </b-form-group>
     
-    <b-form-group id="input-group-7" label="Telefono:" label-for="input-7">
-        <b-form-input
-          id="input-7"
-          type = ""
-          v-model="form.telefono"
-          required
-          placeholder="Ingresa numero de telefono"
-        ></b-form-input>
-      </b-form-group>
+    <div class="form-group col-md-12">
+        <label>Telefono</label>
+        <input type="text" class="form-control"
+        v-model.trim="$v.telefono.$model" :class="{
+          'is-invalid':$v.telefono.$error, 'is-valid':!$v.telefono.$invalid}">
+          <div class="valid-feedback">El telefono es valido</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.telefono.required">El telefono es requerido</span>
+            <span v-if="!$v.telefono.isUnique">Ingrese telefono valido</span>
+          </div>
+      </div>
   
 
-      <b-form-group id="input-group-3" label="Sexo:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.sex"
-          :options="sex"
-          required
-        ></b-form-select>
-
-        <b-form-group id="input-group-8" label="Contraseña:" label-for="input-8">
-        <b-form-input
-          id="input-8"
-          type="password"
-          v-model="contraseña"
-          required
-          placeholder="Ingresa tu contraseña"
-        ></b-form-input>
-      </b-form-group>
-        
       
-      </b-form-group>
-      <b-button type="submit" variant="primary">Registrarme</b-button>
+      <b-button  type="submit" variant="success">Registrar</b-button>
+        
       <b-button type="reset" variant="danger">Limpiar</b-button>
+      </div>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
+import { required, email } from 'vuelidate/lib/validators'
   export default {
+    name: 'RegisterForm',
     data() {
       return {
-        form: {
-          email: '',
-          name: '',
-          sex: null,
-          apellidop: '',
-          apellidom : '',
-          fecha : '',
-          telefono :'',
-         
-        },
+         email: '',
+         name: '',
+         apellidop: '',
+         apellidom : '',
+         telefono :'',
+         fecha : '',
         sex: [{ text: 'Selecciona una opcion', value: null }, 'F', 'M', ],
-        show: true
+        show: true,
+        submitStatus: null
+
+
       }
     },
+    validations: {
+      name:{
+        required,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var nombre = /^[A-Za-z]+$/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(nombre.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+
+      },
+      apellidop:{
+        required,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var apellidop = /^[A-Za-z]+$/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(apellidop.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+
+      },
+      apellidom:{
+        required,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var apellidom = /^[A-Za-z]+$/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(apellidom.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+
+      },
+      telefono:{
+        required,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var telefono = /\([0-9]{3}\) [0-9]{3}[-][0-9]{4}/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(telefono.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+
+      },
+      fecha :{
+        required
+      },
+      email :{
+        required,
+        email,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var Email_Regex = /(.+)@(.+){2,}\.(.+){2,}/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(Email_Regex.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+      }
+    },
+      
     methods: {
-      onSubmit(evt) {
+      /*onSubmit(evt) {
         evt.preventDefault()
         alert(JSON.stringify(this.form))
-      },
+      },*/
+      submit() {
+      console.log('submit!')
+      this.$v.$touch()
+      
+          },
       onReset(evt) {
         evt.preventDefault()
         // Reset our form values
@@ -131,6 +221,13 @@
           this.show = true
         })
       }
+     /* checkForm(evt){
+        evt.preventDefault()
+        if( this.expresion.test(this.form.email)){
+          return true;
+        }*/
+      }
+       
     }
-  }
+  
 </script>
