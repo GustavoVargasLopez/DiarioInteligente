@@ -55,7 +55,7 @@
       </div>
 
       
-      <b-form-group id="input-group-6" label-cols-md="12" label="Fecha de nacimiento:" label-for="input-6">
+      <b-form-group id="input-group-6" label-cols-md="12" label="Fecha de nacimiento" label-for="input-6">
         <b-form-datepicker 
           v-model.trim="$v.fecha.$model" :class="{
           'is-invalid':$v.fecha.$error, 'is-valid':!$v.fecha.$invalid}">
@@ -77,8 +77,34 @@
             <span v-if="!$v.telefono.isUnique">Ingrese telefono valido</span>
           </div>
       </div>
-  
 
+      <div class="form-group col-md-12">
+        <label>Contraseña</label>
+        <input type="password" id="password" class="form-control"
+        v-model.trim="$v.password.$model" :class="{
+          'is-invalid':$v.password.$error, 'is-valid':!$v.password.$invalid}">
+          <div class="valid-feedback">La contraseña es valida</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.telefono.required">La contraseña es requerida</span>
+            <span v-if="!$v.telefono.isUnique">Ingrese contraseña valida</span>
+          </div>
+      </div>
+
+      <div class="form-group form-check">
+        <input type="checkbox" id="showpassword" class="form-check-input" @click="toggleShowPassword" v-model="showpassword">
+        <label class="form-check-label" for="showpassword"> Mostrar contraseña </label>
+      </div>
+
+      <div class="form-group col-md-12">
+        <label>Ingrese contraseña</label>
+        <input type="password"  class="form-control"
+        v-model.trim="$v.repeatpassword.$model" :class="{
+          'is-invalid':$v.repeatpassword.$error, 'is-valid': (password !='')? !$v.repeatpassword.$invalid: ''}">
+          <div class="valid-feedback">Tu contraseña es identica</div>
+          <div class="invalid-feedback">
+             <span v-if="!$v.repeatpassword.sameAsPassword">La contraseña es invalida </span>
+          </div>
+      </div>
       
       <b-button  type="submit" variant="success">Registrar</b-button>
         
@@ -91,7 +117,7 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, sameAs } from 'vuelidate/lib/validators'
   export default {
     name: 'RegisterForm',
     data() {
@@ -102,6 +128,9 @@ import { required, email } from 'vuelidate/lib/validators'
          apellidom : '',
          telefono :'',
          fecha : '',
+         password:'',
+         repeatpassword:'',
+         showpassword: false,
         sex: [{ text: 'Selecciona una opcion', value: null }, 'F', 'M', ],
         show: true,
         submitStatus: null
@@ -192,6 +221,25 @@ import { required, email } from 'vuelidate/lib/validators'
           })
 
         }
+      },
+      password :{
+        required,
+        isUnique (value){
+          if(value == '' ) return true
+
+          var password_Regex = /^[A-Za-z]+$/;
+
+          return new Promise((resolve)=>{
+            setTimeout(()=>{
+              resolve(password_Regex.test(value))
+            }, 350 + Math.random() *300 )
+          })
+
+        }
+      },
+      repeatpassword:{
+        required,
+        sameAsPassword : sameAs('password')
       }
     },
       
@@ -220,6 +268,16 @@ import { required, email } from 'vuelidate/lib/validators'
         this.$nextTick(() => {
           this.show = true
         })
+      },
+      toggleShowPassword (){
+        var show = document.getElementById('password')
+        if(this.showpassword == false){
+          this.showpassword = true
+          show.type = "text"
+        }else{
+          this.showpassword = false
+          show.type = "password"
+        }
       }
      /* checkForm(evt){
         evt.preventDefault()
