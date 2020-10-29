@@ -11,7 +11,7 @@ class Persona(models.Model):
     ApellidoMaterno = models.CharField(max_length=35)
     Sexo = models.CharField(max_length=5)
     Fecha_Nac = models.DateField()
-    Telefono = models.CharField(max_length=11)
+    Telefono = models.CharField(max_length=30)
     Email = models.EmailField(unique=True)
 
 
