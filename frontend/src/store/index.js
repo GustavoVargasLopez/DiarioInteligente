@@ -5,16 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    Email:null
   },
   mutations: {
-    doLogin(Email) {
-     
-      localStorage.setItem('Email', Email)
+    doLogin(state,Email) {
+      state.Email = Email
+      console.log(state.Email)
+      //localStorage.setItem('Email', Email)
+      localStorage.Email = Email
       localStorage.auth = true
     },
     doLogout() {
-      localStorage.setItem('Email', null)
-      localStorage.auth = false
+      localStorage.removeItem('Email')
+      localStorage.removeItem('auth')
     }
   },
   actions: {

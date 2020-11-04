@@ -73,14 +73,15 @@ export default {
               const path = 'http://127.0.0.1:8000/api/v1.0/usuario/'
               axios.get(path,{params: post}).then(function(response){
                 currentObj.output = response.data.Email;
-                console.log(vm.email)
-                console.log(response.data);
+                
+                //console.log(response.data);
                 for(let i=0;i<response.data.length; i++){
                 if(response.data[i].Email == vm.email && response.data[i].Contra == vm.password){
                   num=1;
-                  swal("Iniciando Sesión","","success")
                   vm.$store.dispatch("doLogin", vm.email);
+                  //console.log(vm.email)
                   vm.$router.push({name: 'dashboard'});
+                  swal("Iniciando Sesión","","success")
                   
                 }
                 if(num==0){
