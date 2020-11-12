@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Auth/Login.vue";
 import Register from "../views/Auth/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
+import VistaDiario from "../views/Diario/VistaDiario.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,9 +27,14 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
-    meta:{
-      requiresAuth : true
+    meta: {
+      requiresAuth: true
     }
+  },
+  {
+    path: "/vistadiario",
+    name: "vistadiario",
+    component: VistaDiario
   }
 ];
 
@@ -48,6 +54,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
 
 export default router;
