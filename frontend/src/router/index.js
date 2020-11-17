@@ -16,12 +16,18 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: Login
+    component: Login,
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: "/register",
     name: "register",
-    component: Register
+    component: Register,
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: "/dashboard",
@@ -49,6 +55,17 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       next({ name: "login" });
+    }
+  } else {
+    next();
+  }
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    if (localStorage.auth) {
+      next({ name: "dashboard" });
+    } else {
+      next();
     }
   } else {
     next();

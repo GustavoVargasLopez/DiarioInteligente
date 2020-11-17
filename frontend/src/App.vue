@@ -3,7 +3,10 @@
     <div id="nav">
    <Navigation/>
    </div>
-   <router-view/>
+  <div>
+    <router-view/>
+  </div>
+   
   </div>
 </template>
 

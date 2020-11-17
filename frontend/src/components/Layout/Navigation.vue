@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="dark" variant="success">
+    <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-brand href="#">Home</b-navbar-brand>
@@ -47,17 +47,25 @@ export default {
     }
   },
   created() {
-    this.$bus.$on("logged", () => {
-      this.user = localStorage.Email;
-      /*if(localStorage.auth){
+    
+    if(localStorage.auth){
             this.user = localStorage.Email
         }else{
             this.user = null
-        }*/
+        }
+
+    this.$bus.$on("logged", () => {
+      this.user = localStorage.Email;
+      
     });
     this.$bus.$on("disconnected", () => {
-      this.user = null;
+    this.user = null;
     });
   }
 };
 </script>
+<style scoped>
+ .navbar.navbar-dark.bg-dark{
+    background-color: #005DFF!important;
+ }
+</style>
