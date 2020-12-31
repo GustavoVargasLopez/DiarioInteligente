@@ -3,7 +3,7 @@
     <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-brand href="#">Home</b-navbar-brand>
+        <b-navbar-brand href="#">DiarioInteligente</b-navbar-brand>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
