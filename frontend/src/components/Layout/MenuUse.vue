@@ -31,6 +31,7 @@
         :show-one-child="true"
         @toggle-collapse="onToggleCollapse"
         @item-click="onItemClick"
+        
       />
       </template>
       
@@ -106,13 +107,8 @@ export default {
         },
         {
           href: {path:'/login'},
-          title: 'Iniciar sesión',
-          icon: 'fa fa-user'
-        },
-        {
-          href: {path:'/register'},
-          title: 'Registrarse',
-          icon: 'fa fa-bell'
+          title: 'Cerrar Sesión',
+          icon: 'fa fa-user',          
         }
       ],
       collapsed: false,
@@ -135,6 +131,11 @@ export default {
     window.addEventListener('resize', this.onResize)
   },
   methods: {
+    logout() {
+      this.$store.dispatch("doLogout");
+      this.$router.push({ name: "login" });
+      this.$bus.$emit("disconnected", "User Disconnected");
+    },
     onToggleCollapse (collapsed) {
       console.log(collapsed)
       this.collapsed = collapsed
@@ -142,8 +143,12 @@ export default {
     onItemClick (event, item, node) {
       console.log('onItemClick')
        console.log(event)
-       console.log(item)
+       console.log(item.title)
        console.log(node)
+       if(item.title == "Cerrar Sesión"){
+        this.logout()
+       }
+       //this.logout()
     },
     onResize () {
       if (window.innerWidth <= 767) {
@@ -154,6 +159,22 @@ export default {
         this.collapsed = false
       }
     }
+  },
+  created() {
+    
+    if(localStorage.auth){
+            this.user = localStorage.Email
+        }else{
+            this.user = null
+        }
+
+    this.$bus.$on("logged", () => {
+      this.user = localStorage.Email;
+      
+    });
+    this.$bus.$on("disconnected", () => {
+    this.user = null;
+    });
   }
 }
 </script>
@@ -191,6 +212,7 @@ body {
   opacity: 0.5;
   z-index: 900;
 }
+
 .demo {
   padding: 50px;
 }
