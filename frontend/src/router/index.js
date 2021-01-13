@@ -1,22 +1,25 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "../views/Auth/Login.vue";
 import Register from "../views/Auth/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
 import VistaDiario from "../views/Diario/VistaDiario.vue";
+import Inicio from "../views/Inicio/CargarInicio.vue";
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
     path: "/login",
     name: "login",
     component: Login,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: "/inicio",
+    name: "inicio",
+    component: Inicio,
     meta: {
       requireAuth: true
     }
@@ -71,5 +74,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 
 export default router;

@@ -6,7 +6,31 @@
   <div class="container mt-5 mb-5">
  <!-- <b-form @submit="ObtenerFecha"> -->
   <v-container fluid>
-    {{now}}
+    <div class="input-group">
+    <vs-button
+        circle
+        color="warn"
+        gradient
+        @click="visible=!visible"
+      >
+        Agregar hoja <i class='bx bxs-plus-circle'></i>
+      </vs-button>
+
+      <vs-button
+        circle
+        gradient
+        warn
+        animation-type="rotate"
+      >
+       <i class='bx bx-calendar'></i> Fecha
+        <template #animate >
+          <i class='bx bx-calendar'></i> {{now}}
+        </template>
+      </vs-button>
+    </div>
+    
+    <span v-if="visible">
+      <v-spacer></v-spacer>
     <v-textarea
       v-model="ContenidoTextArea"
       v-on:keyup.enter="Pregunta"
@@ -17,7 +41,24 @@
       label="Escribe lo que hiciste el dia de hoy"
     ></v-textarea>
     <v-spacer></v-spacer>
-    <b-button type="submit" variant="success">Guardar</b-button>
+    <div class="input-group">
+    <vs-button
+        circle
+        color="success"
+        gradient
+      >
+        Guardar <i class='bx bxs-plus-circle'></i>
+      </vs-button>
+       <vs-button
+       @click="visible=!visible"
+        circle
+        danger
+        gradient
+      >
+        Cancelar <i class='bx bx-x-circle'></i>
+      </vs-button>
+    </div>
+    </span>
   </v-container>
    <!-- </b-form> -->
   </div>
@@ -28,11 +69,12 @@ import swal from "sweetalert";
   export default {
     
     data: () => ({
+      visible: false,
       incrementador : 0,
       cantidad : 10,
       rules: [v => v.length <= 500 || swal({
             title: "Pregunta!",
-            text: "Pregunta generada por el backend de acuerdo a lo escrito por el usuario:",
+            text: "¿Crees sentirte mal al respecto sobre la situacion comentada?",
             icon: "info",
             buttons: ["No","Si"],
             closeOnClickOutside: false,

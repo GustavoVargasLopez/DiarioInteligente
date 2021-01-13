@@ -5,12 +5,7 @@
   >
     <div class="demo">
       <div class="container">
-        <h1>
-          vue-sidebar-menu
-        </h1>
-        <p>A vue.js sidebar menu component</p>
        
-        <hr style="margin: 50px 0px;border: 1px solid #e3e3e3;">
         <router-view/>
       </div>
       <template v-if="user">
@@ -52,6 +47,8 @@ export default {
   data () {
     return {
       user: "null",
+      Mycollapse: true,
+      
       menu: [        
         {
           header: true,
@@ -112,20 +109,11 @@ export default {
         }
       ],
       collapsed: false,
-      themes: [
-        {
-          name: 'Default theme',
-          input: ''
-        },
-        {
-          name: 'White theme',
-          input: 'white-theme'
-        }
-      ],
-      selectedTheme: 'Default theme',
+      selectedTheme: 'White theme',
       isOnMobile: false
     }
   },
+  
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize)
@@ -189,7 +177,7 @@ html {
 body {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 18px;
-  background-color: #f2f4f7;
+  background-color: #FFFFFF;
   color: #262626;
 }
 #demo {

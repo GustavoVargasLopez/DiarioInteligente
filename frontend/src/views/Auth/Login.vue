@@ -1,5 +1,4 @@
 <template>
-  <div class="container mt-5 mb-5" style="width: 400px">
     <div class="card">
       <h3 class="card-header text-center">Iniciar Sesión</h3>
       <div class="card-body">
@@ -49,7 +48,6 @@
         </b-form>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import axios from "axios";
